@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package net.liftweb
+package net.liftmodules
 package machine
 
 import collection.mutable.{Queue, HashMap}
 
+import net.liftweb._
 import common._
 import actor._
 import util._

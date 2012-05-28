@@ -5,6 +5,10 @@ This module provides "a state machine that allows you to define transition rules
 
 ---
 
+**Note:** The module package changed from `net.liftweb.machine` to `net.liftmodules.machine` in May 2012.  Please consider this when referencing documentation written before that date.
+
+
+
 Notes for module developers
 ===========================
 
