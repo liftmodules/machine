@@ -1,5 +1,5 @@
 /*
- * Copyright 2006-2011 WorldWide Conferencing, LLC
+ * Copyright 2006-2013 WorldWide Conferencing, LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -340,7 +340,7 @@ trait MetaProtoStateMachine [MyType <: ProtoStateMachine[MyType, StateType],
 			      timedEventHandler ! (stateItem, event)
 			    }
         } catch {
-          case e => logger.error("State machine loop", e)
+          case e: Throwable => logger.error("State machine loop", e)
         }
         Schedule.schedule(this, Ping, TimeSpan(timedEventPeriodicWait))
       }
@@ -355,7 +355,7 @@ trait MetaProtoStateMachine [MyType <: ProtoStateMachine[MyType, StateType],
             try {
               item.processEvent(event)
             } catch {
-              case e => logger.error("Timed Event Handler"+e)
+              case e: Throwable => logger.error("Timed Event Handler"+e)
             }
         }
 
