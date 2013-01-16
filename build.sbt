@@ -10,7 +10,7 @@ scalaVersion := "2.10.0"
  
 scalacOptions ++= Seq("-unchecked", "-deprecation")
  
-crossScalaVersions := Seq("2.9.2", "2.9.1-1", "2.9.1")
+crossScalaVersions := Seq("2.10.0", "2.9.2", "2.9.1-1", "2.9.1")
 
 resolvers += "CB Central Mirror" at "http://repo.cloudbees.com/content/groups/public"
 
