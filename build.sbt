@@ -2,15 +2,15 @@ name := "machine"
 
 organization := "net.liftmodules"
 
-version := "1.2-SNAPSHOT"
+version := "1.3-SNAPSHOT"
 
-liftVersion <<= liftVersion ?? "2.5-SNAPSHOT"
+liftVersion <<= liftVersion ?? "2.6-SNAPSHOT"
 
 liftEdition <<= liftVersion apply { _.substring(0,3) }
 
-name <<= (name, liftEdition) { (n, e) =>  n + "_" + e }
+moduleName <<= (name, liftEdition) { (n, e) =>  n + "_" + e }
 
-scalaVersion := "2.10.0"
+scalaVersion := "2.10.3"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
@@ -26,20 +26,28 @@ libraryDependencies <++= liftVersion { v =>
   Nil
 }
 
+// For unit tests:
+
+libraryDependencies += "com.h2database" % "h2" % "1.3.170" % "test"
+
+libraryDependencies +=  "ch.qos.logback" % "logback-classic" % "1.0.6" % "test"
+
 libraryDependencies <++= scalaVersion { sv =>
   (sv match {
-      case "2.10.0" => "org.specs2" %% "specs2" % "1.13" % "test"
       case "2.9.2" | "2.9.1" | "2.9.1-1" => "org.specs2" %% "specs2" % "1.12.3" % "test"
+      case _ => "org.specs2" %% "specs2" % "2.3.1" % "test"
       })  ::
   Nil
 }
+
+parallelExecution in Test := false
+
 
 publishTo <<= version { _.endsWith("SNAPSHOT") match {
  	case true  => Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
  	case false => Some("releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2")
   }
  }
-
 
 // For local deployment:
 
