@@ -2,8 +2,10 @@ package net.liftmodules.machine
 
 import org.specs2.mutable.Specification
 import net.liftweb.util.Helpers.TimeSpan
-import org.specs2.specification.AroundContextExample
 import net.liftmodules.machine.TestMachines.Machine.FirstEvent
+import net.liftweb.common.Empty
+import net.liftweb.db.{DefaultConnectionIdentifier, StandardDBVendor}
+import net.liftweb.mapper.{DB, Schemifier}
 
 object TestMachines {
 
@@ -39,16 +41,20 @@ object TestMachines {
 }
 
 
-class TransitionSpec extends Specification with AroundContextExample[InMemoryDB] {
+class TransitionSpec extends Specification {
 
   sequential
 
-  def aroundContext = new InMemoryDB()
-
-  "After" should {
+  "processEvent" should {
     "support duration-based state transitions" in {
 
       import TestMachines._, Machine.TimerEvent
+
+      // Having the test DB set up here isn't ideal.
+      // Specs2 `around` has changed and I've not figured out how to support 2.9.2 and 2.10.x yet
+      lazy val vendr = new StandardDBVendor("org.h2.Driver", "jdbc:h2:mem:specs2;DB_CLOSE_DELAY=-1", Empty, Empty)
+      DB.defineConnectionManager(DefaultConnectionIdentifier, vendr)
+      Schemifier.schemify(true, Schemifier.infoF _, Machine)
 
       // After construction, we are in Active state:
       val machine = Machine.newInstance(FirstEvent)
@@ -56,7 +62,12 @@ class TransitionSpec extends Specification with AroundContextExample[InMemoryDB]
 
       // Once the timer runs, we're in Expired state:
       machine.processEvent(TimerEvent(durationBeforeExpiry))
-      machine.state must_== States.Expired
+      val endState = machine.state
+
+      // Test database clean up:
+      vendr.closeAllConnections_!()
+
+      endState must_== States.Expired
 
     }
   }
