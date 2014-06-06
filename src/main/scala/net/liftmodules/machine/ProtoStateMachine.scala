@@ -73,19 +73,19 @@ trait ProtoStateMachine[MyType <: ProtoStateMachine[MyType, StateType], StateTyp
   object timedEventAt extends MappedLong[MyType](this)
 
   object nextTransitionAt extends MappedLong[MyType](this) with LifecycleCallbacks {
-    override def beforeSave {if (this.is < System.currentTimeMillis) this.set(-1L)}
+    override def beforeSave {if (this.get < System.currentTimeMillis) this.set(-1L)}
     override def dbIndexed_?  = true
   }
 
   def setupTime(when: TimeSpan) {
-    val trigger = timedEventAt.is + when.millis
-    if (trigger >= System.currentTimeMillis && (nextTransitionAt.is <= 0L || trigger < nextTransitionAt.is)) nextTransitionAt.set(trigger)
+    val trigger = timedEventAt.get + when.millis
+    if (trigger >= System.currentTimeMillis && (nextTransitionAt.get <= 0L || trigger < nextTransitionAt.get)) nextTransitionAt.set(trigger)
   }
 
   /**
     * Get the current state
     */
-  def state: StateType#Value = getSingleton.stateEnumeration(currentState.is)
+  def state: StateType#Value = getSingleton.stateEnumeration(currentState.get)
 
 
   /**
@@ -276,7 +276,7 @@ trait MetaProtoStateMachine [MyType <: ProtoStateMachine[MyType, StateType],
            case _ =>
          }
        }
-       if (who.nextTransitionAt.is == -1) super.unmatchedEventHandler(who, state)
+       if (who.nextTransitionAt.get == -1) super.unmatchedEventHandler(who, state)
        else who.inProcess(false).save
      }
   }
@@ -336,7 +336,7 @@ trait MetaProtoStateMachine [MyType <: ProtoStateMachine[MyType, StateType],
 				  now)).foreach {
 			      stateItem =>
 				stateItem.inProcess(true).save
-			      val event = TimerEvent(TimeSpan(now - stateItem.timedEventAt.is))
+			      val event = TimerEvent(TimeSpan(now - stateItem.timedEventAt.get))
 			      timedEventHandler ! (stateItem, event)
 			    }
         } catch {
