@@ -4,7 +4,8 @@ import org.specs2.mutable.Specification
 import net.liftweb.util.Helpers.TimeSpan
 import net.liftmodules.machine.TestMachines.Machine.FirstEvent
 import net.liftweb.common.Empty
-import net.liftweb.db.{DefaultConnectionIdentifier, StandardDBVendor}
+import net.liftweb.util.DefaultConnectionIdentifier
+import net.liftweb.db.StandardDBVendor
 import net.liftweb.mapper.{DB, Schemifier}
 
 object TestMachines {
