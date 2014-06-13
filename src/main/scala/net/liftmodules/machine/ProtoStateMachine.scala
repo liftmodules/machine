@@ -256,8 +256,12 @@ trait MetaProtoStateMachine [MyType <: ProtoStateMachine[MyType, StateType],
     def setup(setp: (MyType, StV) => Any): this.type = {_setup = setp :: _setup; this}
   }
 
-  // case class TimeTransition(to: StV, time: TimeSpan) extends Transition
-  case class After(when: TimeSpan, override val to: StV) extends ATransition(to, {case TimerEvent(len) if (when.millis <= len.millis) => true}) {
+
+  private def onExpiry(when: TimeSpan) : PartialFunction[Meta#Event, Any] = {
+    case TimerEvent(len) if when.millis <= len.millis => true
+  }
+
+  case class After(when: TimeSpan, override val to: StV) extends ATransition(to, onExpiry(when)) {
     setup ((what, state) => what.setupTime(when))
   }
 
