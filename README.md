@@ -1,6 +1,8 @@
 Machine Lift Module
 ==================
 
+[![Build Status](https://travis-ci.org/liftmodules/machine.svg?branch=master)](https://travis-ci.org/liftmodules/machine)
+
 This module provides "a state machine that allows you to define transition rules and events.  You have to add a single column to keep track of the state of the item and machine takes care of the rest."
 
 For use with Mapper.
