@@ -5,19 +5,28 @@ This module provides "a state machine that allows you to define transition rules
 
 For use with Mapper.
 
-To include this module in your Lift project, update your `libraryDependencies` in `build.sbt` to include:
+Installation
+------------
 
-*Lift 2.5.x* for Scala 2.9 and 2.10:
+To include this module in your Lift project, add the following to `build.sbt`:
 
-    "net.liftmodules" %% "machine_2.5" % "1.2"
+    libraryDependencies += "net.liftmodules" %% "machine_3.0" % "1.3.0"
 
-*Lift 2.6.x* for Scala 2.9, 2.10 and 2.11:
+### Releases
 
-    "net.liftmodules" %% "machine_2.6" % "1.3-SNAPSHOT"
 
-*Lift 3.0.x* for Scala 2.10:
+| Lift Version | Scala Version | Module Version |
+|--------------|---------------|----------------|
+| 3.0.x        | 2.11, 2.10    |  1.3           |
+| 2.5.x        | 2.10, 2.9     |  1.2           |
 
-    "net.liftmodules" %% "machine_3.0" % "1.2-SNAPSHOT"
+
+### Historic Snapshots
+
+| Lift Version | Scala Version   | Module Version |
+|--------------|-----------------|----------------|
+| 2.6.x        | 2.11, 2.9, 2.10 | 1.3-SNAPSHOT   |
+| 3.0.x        | 2.10            | 1.2-SNAPSHOT   |
 
 
 Documentation
@@ -31,5 +40,4 @@ Documentation
 Notes for module developers
 ===========================
 
-* The [Jenkins build](https://liftmodules.ci.cloudbees.com/job/machine/) is triggered on a push to master.
-
+Merge to master will trigger a Travis build and publish a SNAPSHOT (if the version is a -SNAPSHOT).
