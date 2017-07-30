@@ -12,9 +12,9 @@ liftEdition := (liftVersion apply { _.substring(0,3) }).value
 
 moduleName := name.value + "_" + liftEdition.value
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.3"
 
-crossScalaVersions := Seq("2.12.1", "2.11.8")
+crossScalaVersions := Seq("2.12.3", "2.11.11")
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
