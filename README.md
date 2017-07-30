@@ -12,14 +12,15 @@ Installation
 
 To include this module in your Lift project, add the following to `build.sbt`:
 
-    libraryDependencies += "net.liftmodules" %% "machine_3.0" % "1.3.0"
+    libraryDependencies += "net.liftmodules" %% "machine_3.1" % "1.4.0"
 
 ### Releases
 
 
 | Lift Version | Scala Version | Module Version |
 |--------------|---------------|----------------|
-| 3.0.x        | 2.11, 2.10    |  1.3           |
+| 3.1.x        | 2.11, 2.12    |  1.4.0         |
+| 3.0.x        | 2.11, 2.12    |  1.3           |
 | 2.5.x        | 2.10, 2.9     |  1.2           |
 
 
