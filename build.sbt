@@ -4,7 +4,7 @@ name := "machine"
 
 organization := "net.liftmodules"
 
-version := "1.3.0-SNAPSHOT"
+version := "1.4.0-SNAPSHOT"
 
 liftVersion := "3.0.1"
 
